@@ -23,3 +23,23 @@ export const LoadingImage = styled.Image`
             translate: translateX(100);
         `} */
 `;
+
+export const SignInButton = styled.TouchableOpacity`
+    background: #74b9ff;
+    width: 60px;
+    height: 30px;
+    border-radius: 30px;
+`;
+
+export const SignInText = styled.Text`
+    color: white;
+    text-align: center;
+    padding-top: 4px;
+`;
+
+export const SignOutButton = styled(SignInButton)`
+    background: #e74c3c;
+    width: 60px;
+    height: 30px;
+    border-radius: 30px;
+`;

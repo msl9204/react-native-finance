@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 import {
@@ -8,9 +8,10 @@ import {
     Platform,
     ScrollView,
     Button,
+    TouchableOpacity,
 } from "react-native";
 import { GlobalStyle } from "../../styles/GlobalStyles";
-
+import { SignInButton, SignInText, SignOutButton } from "../../styles/styles";
 import { useAuth } from "../Auth/useAuth";
 
 const HeaderContainer = styled.View`
@@ -54,12 +55,27 @@ export default function MainPage({ navigation }) {
     return (
         <GlobalStyle OS={Platform.OS}>
             <HeaderContainer>
-                <HeaderText>... 님 반갑습니다.</HeaderText>
+                <HeaderText>
+                    {auth.currentUser() && auth.currentUser().email} 님
+                    반갑습니다.
+                </HeaderText>
                 <HeaderText>Profile Img</HeaderText>
-                <Button
-                    title="SignIn"
-                    onPress={() => navigation.navigate("SignIn")}
-                />
+
+                {auth.currentUser() ? (
+                    <React.Fragment>
+                        <SignOutButton onPress={() => auth.signout()}>
+                            <SignInText>SignOut</SignInText>
+                        </SignOutButton>
+                    </React.Fragment>
+                ) : (
+                    <React.Fragment>
+                        <SignInButton
+                            onPress={() => navigation.navigate("SignIn")}
+                        >
+                            <SignInText>SignIn</SignInText>
+                        </SignInButton>
+                    </React.Fragment>
+                )}
             </HeaderContainer>
             <ScrollImgContainer>
                 <ImgScroll horizontal>

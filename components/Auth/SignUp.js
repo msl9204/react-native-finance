@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { GlobalStyle } from "../../styles/GlobalStyles";
+import { SignInButton, SignInText } from "../../styles/styles";
 import styled from "styled-components";
 import { useAuth } from "./useAuth";
 
@@ -43,14 +44,15 @@ export default function SignUp() {
                     defaultValue={password}
                     secureTextEntry
                 />
-                <SubmitButton
-                    title="SignUp"
+                <SignInButton
                     onPress={() => {
                         auth.signup(email, password).then((response) =>
                             console.log(response)
                         );
                     }}
-                />
+                >
+                    <SignInText>SignUp</SignInText>
+                </SignInButton>
             </FormContainer>
         </GlobalStyle>
     );
