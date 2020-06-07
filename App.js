@@ -5,7 +5,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import AppLoading from "./components/AppLoadingPage/AppLoading";
-import MainPage from "./components/MainPage/MainPage";
+import MainStack from "./components/MainPage/MainStack";
 import StockInfo from "./components/StockInfoPage/StockInfo";
 import Search from "./components/SearchPage/Search";
 import Profile from "./components/ProfilePage/Profile";
@@ -26,7 +26,7 @@ export default function App() {
                     <Tab.Navigator>
                         <Tab.Screen
                             name="Home"
-                            component={MainPage}
+                            component={MainStack}
                             options={{
                                 tabBarIcon: ({ color, size }) => (
                                     <MaterialCommunityIcons

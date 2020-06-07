@@ -7,10 +7,10 @@ import {
     View,
     Platform,
     ScrollView,
-    Dimensions,
+    Button,
 } from "react-native";
 import { GlobalStyle } from "../../styles/GlobalStyles";
-import { TabView, SceneMap } from "react-native-tab-view";
+
 import { useAuth } from "../Auth/useAuth";
 
 const HeaderContainer = styled.View`
@@ -48,7 +48,7 @@ const ContentContainer = styled.View`
     border-radius: 30px;
 `;
 
-export default function MainPage() {
+export default function MainPage({ navigation }) {
     const auth = useAuth();
 
     return (
@@ -56,6 +56,10 @@ export default function MainPage() {
             <HeaderContainer>
                 <HeaderText>... 님 반갑습니다.</HeaderText>
                 <HeaderText>Profile Img</HeaderText>
+                <Button
+                    title="SignIn"
+                    onPress={() => navigation.navigate("SignIn")}
+                />
             </HeaderContainer>
             <ScrollImgContainer>
                 <ImgScroll horizontal>

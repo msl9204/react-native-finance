@@ -16,8 +16,6 @@ export const useAuth = () => {
 function useProvideAuth() {
     const [user, setUser] = useState(null);
 
-    // Wrap any Firebase methods we want to use making sure ...
-    // ... to save the user to state.
     const signin = (email, password) => {
         return firebase
             .auth()
@@ -90,11 +88,9 @@ function useProvideAuth() {
             }
         });
 
-        // Cleanup subscription on unmount
         return () => unsubscribe();
     }, []);
 
-    // Return the user object and auth methods
     return {
         user,
         signin,
