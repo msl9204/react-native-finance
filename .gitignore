@@ -266,3 +266,6 @@ Temporary Items
 .apdisk
 
 # End of https://www.toptal.com/developers/gitignore/api/reactnative
+
+# Firebase_Config
+config

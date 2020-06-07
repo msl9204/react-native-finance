@@ -3,7 +3,7 @@ import { Animated } from "react-native";
 import styled from "styled-components";
 import { LoadingPage, LoadingText, LoadingImage } from "../../styles/styles";
 
-export default function AppLoading() {
+export default function AppLoading({ navigation }) {
     const [value, setValue] = useState(new Animated.Value(0));
     const [position, setPosition] = useState(
         new Animated.ValueXY({ x: -100, y: 0 })
@@ -14,6 +14,8 @@ export default function AppLoading() {
             toValue: { x: 1, y: 0 },
             velocity: 0.2,
         }).start();
+
+        setTimeout(() => navigation.navigate("Home"), 3000);
     }, []);
 
     function _getStyle() {
