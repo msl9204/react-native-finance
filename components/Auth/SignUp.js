@@ -46,9 +46,10 @@ export default function SignUp() {
                 />
                 <SignInButton
                     onPress={() => {
-                        auth.signup(email, password).then((response) =>
-                            console.log(response)
-                        );
+                        auth.signup(email, password).then((response) => {
+                            console.log(response.email);
+                            return auth.test();
+                        });
                     }}
                 >
                     <SignInText>SignUp</SignInText>

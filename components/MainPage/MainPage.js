@@ -16,8 +16,7 @@ import { SignInButton, SignInText, SignOutButton } from "../../styles/styles";
 import { useAuth } from "../Auth/useAuth";
 import { TabView, TabBar, SceneMap } from "react-native-tab-view";
 import Main_Summary from "./SwipePage/Main_Summary";
-import Main_Detail from "./SwipePage/Main_Detail";
-import Main_Financial from "./SwipePage/Main_Financial";
+
 import Main_News from "./SwipePage/Main_News";
 
 const HeaderContainer = styled.View`
@@ -30,38 +29,15 @@ const HeaderText = styled.Text`
     flex-grow: 1;
 `;
 
-const ScrollImgContainer = styled.View`
-    display: flex;
-    flex-direction: row;
-    margin: 30px 0 30px 0;
-`;
-
-const ImgScroll = styled(ScrollView)`
-    flex-direction: row;
-`;
-
-const ImgBox = styled.Text`
-    background: #c4c4c4;
-    border-radius: 30px;
-    width: 150px;
-    height: 150px;
-    margin: 10px;
-`;
-
-const ContentContainer = styled.View`
-    width: 370px;
-    height: 500px;
-    background: #c4c4c4;
-    border-radius: 30px;
-`;
-
 const initialLayout = { height: 0, width: Dimensions.get("window").width };
 
+// TabBar Styling
 const renderTabBar = (props) => (
     <TabBar
         {...props}
         indicatorStyle={{ backgroundColor: "#0984e3" }}
-        style={{ color: "black", backgroundColor: "lightgrey" }}
+        labelStyle={{ color: "black" }}
+        style={{ backgroundColor: "lightgrey" }}
     />
 );
 
@@ -69,8 +45,7 @@ export default function MainPage({ navigation }) {
     const [index, setIndex] = React.useState(0);
     const [routes] = React.useState([
         { key: "Summary", title: "Summary" },
-        { key: "Detail", title: "Detail" },
-        { key: "Financial", title: "Financial" },
+
         { key: "News", title: "News" },
     ]);
 
@@ -79,8 +54,7 @@ export default function MainPage({ navigation }) {
     // Swipe 객체들 Routing
     const renderScene = SceneMap({
         Summary: Main_Summary,
-        Detail: Main_Detail,
-        Financial: Main_Financial,
+
         News: Main_News,
     });
 
