@@ -53,7 +53,6 @@ export default function MainPage({ navigation }) {
     // Swipe 객체들 Routing
     const renderScene = SceneMap({
         Summary: Main_Summary,
-
         News: Main_News,
     });
 
@@ -62,12 +61,11 @@ export default function MainPage({ navigation }) {
             <GlobalStyle OS={Platform.OS}>
                 <HeaderContainer>
                     <HeaderText>
-                        {auth.currentUser() && auth.currentUser().email} 님
-                        반갑습니다.
+                        {auth.user && auth.nickName} 님 반갑습니다.
                     </HeaderText>
                     <HeaderText>Profile Img</HeaderText>
 
-                    {auth.currentUser() ? (
+                    {auth.user ? (
                         <React.Fragment>
                             <SignOutButton onPress={() => auth.signout()}>
                                 <SignInText>SignOut</SignInText>

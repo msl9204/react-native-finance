@@ -73,7 +73,7 @@ export default function SignIn({ navigation }) {
                     </SignInButton>
                 </FormContainer>
                 <SignUpText onPress={() => navigation.navigate("SignUp")}>
-                    계정이 없으신가요? -> SignUp
+                    {"계정이 없으신가요? -> SignUp"}
                 </SignUpText>
             </GlobalStyle>
         </KeyboardAvoidingView>

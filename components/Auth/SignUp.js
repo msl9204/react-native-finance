@@ -26,10 +26,10 @@ const SubmitButton = styled.Button`
     border-radius: 90px;
 `;
 
-async function test(email, nickname) {
+function test(email, nickname) {
     const nickRef = firestore_db.collection("nicknames").doc(nickname);
 
-    return await nickRef
+    return nickRef
         .get()
         .then(function (doc) {
             if (doc.exists) {
@@ -74,7 +74,7 @@ export default function SignUp({ navigation }) {
                     onPress={() => {
                         auth.signup(email, password).then((response) => {
                             if (response.accessToken !== null) {
-                                test(email, nickName);
+                                auth.checkAndAddNickname(email, nickName);
                             }
                         });
                     }}

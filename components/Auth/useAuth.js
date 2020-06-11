@@ -15,6 +15,7 @@ export const useAuth = () => {
 
 function useProvideAuth() {
     const [user, setUser] = useState(null);
+    const [nickName, setNickName] = useState(null);
 
     const signin = (email, password) => {
         return firebase_auth
@@ -69,41 +70,37 @@ function useProvideAuth() {
             .catch(function (error) {
                 console.log("Error getting document:", error);
             });
-
-        // return firestore_db.collection("nicknames").doc(nickname).set({
-        //     email: email,
-        //     nickname: nickname,
-        // });
     };
 
-    const currentUser = () => {
-        const user = firebase_auth.currentUser;
+    const getNickname = (email) => {
+        const nickRef = firestore_db.collection("nicknames");
 
-        // if (user !== null) {
-        //     user.providerData.forEach(function (profile) {
-        //         console.log("Sign-in provider: " + profile.providerId);
-        //         console.log("  Provider-specific UID: " + profile.uid);
-        //         console.log("  Name: " + profile.displayName);
-        //         console.log("  Email: " + profile.email);
-        //         console.log("  Photo URL: " + profile.photoURL);
-        //     });
-        // } else {
-        //     console.log("로그인한 유저가 없습니다.");
-        // }
+        return nickRef
+            .where("email", "==", email)
+            .get()
+            .then((snapshot) => {
+                if (snapshot.empty) {
+                    console.log("No matching documents.");
+                    return;
+                }
 
-        // if (user !== null) {
-        //     return user.providerData.uid;
-        // }
-
-        return user;
+                snapshot.forEach((doc) => {
+                    setNickName(doc.id);
+                });
+            })
+            .catch((err) => {
+                console.log("Error getting documents", err);
+            });
     };
 
     useEffect(() => {
         const unsubscribe = firebase_auth.onAuthStateChanged((user) => {
             if (user) {
                 setUser(user);
+                getNickname(user.email);
             } else {
                 setUser(false);
+                getNickname(null);
             }
         });
 
@@ -112,12 +109,12 @@ function useProvideAuth() {
 
     return {
         user,
+        nickName,
         signin,
         signup,
         signout,
         sendPasswordResetEmail,
         confirmPasswordReset,
-        currentUser,
         checkAndAddNickname,
     };
 }
