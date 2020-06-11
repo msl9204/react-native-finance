@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View, Platform } from "react-native";
 import { GlobalStyle } from "../../styles/GlobalStyles";
 import styled from "styled-components";
-import db from "../../db/firebase_auth";
+import { useAuth } from "../Auth/useAuth";
 
 const ProfileHeader = styled.View`
     width: 100%;
@@ -26,6 +26,8 @@ const ContentsText = styled.Text`
 `;
 
 export default function Profile() {
+    const auth = useAuth();
+
     return (
         <GlobalStyle OS={Platform.OS}>
             <ProfileHeader>

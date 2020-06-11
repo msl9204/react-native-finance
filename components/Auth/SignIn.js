@@ -62,7 +62,6 @@ export default function SignIn({ navigation }) {
                         onPress={() => {
                             auth.signin(email, password).then((response) => {
                                 if (response.accessToken !== null) {
-                                    console.log(response);
                                     navigation.navigate("Home");
                                 } else {
                                     console.log("잘못입력하셨습니다.");

@@ -45,7 +45,6 @@ export default function MainPage({ navigation }) {
     const [index, setIndex] = React.useState(0);
     const [routes] = React.useState([
         { key: "Summary", title: "Summary" },
-
         { key: "News", title: "News" },
     ]);
 

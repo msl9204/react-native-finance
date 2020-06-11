@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, createContext } from "react";
-import { firebase } from "../../db/firebase_auth";
+import { firebase_auth, firestore_db } from "../../db/firebase_auth";
 
 const authContext = createContext();
 
@@ -17,8 +17,7 @@ function useProvideAuth() {
     const [user, setUser] = useState(null);
 
     const signin = (email, password) => {
-        return firebase
-            .auth()
+        return firebase_auth
             .signInWithEmailAndPassword(email, password)
             .then((response) => {
                 setUser(response.user);
@@ -27,8 +26,7 @@ function useProvideAuth() {
     };
 
     const signup = (email, password) => {
-        return firebase
-            .auth()
+        return firebase_auth
             .createUserWithEmailAndPassword(email, password)
             .then((response) => {
                 setUser(response.user);
@@ -37,34 +35,49 @@ function useProvideAuth() {
     };
 
     const signout = () => {
-        return firebase
-            .auth()
-            .signOut()
-            .then(() => {
-                setUser(false);
-            });
+        return firebase_auth.signOut().then(() => {
+            setUser(false);
+        });
     };
 
     const sendPasswordResetEmail = (email) => {
-        return firebase
-            .auth()
-            .sendPasswordResetEmail(email)
-            .then(() => {
-                return true;
-            });
+        return firebase_auth.sendPasswordResetEmail(email).then(() => {
+            return true;
+        });
     };
 
     const confirmPasswordReset = (code, password) => {
-        return firebase
-            .auth()
-            .confirmPasswordReset(code, password)
-            .then(() => {
-                return true;
+        return firebase_auth.confirmPasswordReset(code, password).then(() => {
+            return true;
+        });
+    };
+
+    const checkAndAddNickname = (email, nickname) => {
+        const nickRef = firestore_db.collection("nicknames").doc(nickname);
+
+        return nickRef
+            .get()
+            .then(function (doc) {
+                if (doc.exists) {
+                    console.log("Document data:", doc.data());
+                } else {
+                    // doc.data() will be undefined in this case
+                    console.log("No such document!");
+                    nickRef.set({ email: email });
+                }
+            })
+            .catch(function (error) {
+                console.log("Error getting document:", error);
             });
+
+        // return firestore_db.collection("nicknames").doc(nickname).set({
+        //     email: email,
+        //     nickname: nickname,
+        // });
     };
 
     const currentUser = () => {
-        const user = firebase.auth().currentUser;
+        const user = firebase_auth.currentUser;
 
         // if (user !== null) {
         //     user.providerData.forEach(function (profile) {
@@ -86,7 +99,7 @@ function useProvideAuth() {
     };
 
     useEffect(() => {
-        const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+        const unsubscribe = firebase_auth.onAuthStateChanged((user) => {
             if (user) {
                 setUser(user);
             } else {
@@ -105,5 +118,6 @@ function useProvideAuth() {
         sendPasswordResetEmail,
         confirmPasswordReset,
         currentUser,
+        checkAndAddNickname,
     };
 }

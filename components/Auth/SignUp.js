@@ -3,10 +3,11 @@ import { GlobalStyle } from "../../styles/GlobalStyles";
 import { SignInButton, SignInText } from "../../styles/styles";
 import styled from "styled-components";
 import { useAuth } from "./useAuth";
+import { firestore_db } from "../../db/firebase_auth";
 
 const FormContainer = styled.View`
     display: flex;
-    margin-top: 300px;
+    margin-top: 260px;
     align-items: center;
 `;
 
@@ -25,9 +26,29 @@ const SubmitButton = styled.Button`
     border-radius: 90px;
 `;
 
-export default function SignUp() {
+async function test(email, nickname) {
+    const nickRef = firestore_db.collection("nicknames").doc(nickname);
+
+    return await nickRef
+        .get()
+        .then(function (doc) {
+            if (doc.exists) {
+                console.log("Document data:", doc.data());
+            } else {
+                // doc.data() will be undefined in this case
+                console.log("No such document!");
+                nickRef.set({ email: email });
+            }
+        })
+        .catch(function (error) {
+            console.log("Error getting document:", error);
+        });
+}
+
+export default function SignUp({ navigation }) {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
+    const [nickName, setNickName] = useState();
     const auth = useAuth();
 
     return (
@@ -44,11 +65,17 @@ export default function SignUp() {
                     defaultValue={password}
                     secureTextEntry
                 />
+                <EmailText
+                    placeholder="nickname"
+                    onChangeText={(text) => setNickName(text)}
+                    defaultValue={nickName}
+                />
                 <SignInButton
                     onPress={() => {
                         auth.signup(email, password).then((response) => {
-                            console.log(response.email);
-                            return auth.test();
+                            if (response.accessToken !== null) {
+                                test(email, nickName);
+                            }
                         });
                     }}
                 >
