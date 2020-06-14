@@ -75,6 +75,7 @@ export default function SignUp({ navigation }) {
                         auth.signup(email, password).then((response) => {
                             if (response.accessToken !== null) {
                                 auth.checkAndAddNickname(email, nickName);
+                                navigation.navigate("Home");
                             }
                         });
                     }}

@@ -61,7 +61,13 @@ export default function MainPage({ navigation }) {
             <GlobalStyle OS={Platform.OS}>
                 <HeaderContainer>
                     <HeaderText>
-                        {auth.user && auth.nickName} 님 반갑습니다.
+                        {auth.user ? (
+                            <React.Fragment>
+                                {auth.nickName}님 반갑습니다.
+                            </React.Fragment>
+                        ) : (
+                            <React.Fragment>로그인해주세요!</React.Fragment>
+                        )}
                     </HeaderText>
                     <HeaderText>Profile Img</HeaderText>
 

@@ -56,6 +56,7 @@ function useProvideAuth() {
     const checkAndAddNickname = (email, nickname) => {
         const nickRef = firestore_db.collection("nicknames").doc(nickname);
 
+        setNickName(nickname);
         return nickRef
             .get()
             .then(function (doc) {
@@ -96,11 +97,13 @@ function useProvideAuth() {
     useEffect(() => {
         const unsubscribe = firebase_auth.onAuthStateChanged((user) => {
             if (user) {
+                console.log("=============================");
+                console.log(user);
                 setUser(user);
                 getNickname(user.email);
             } else {
                 setUser(false);
-                getNickname(null);
+                getNickname(false);
             }
         });
 
