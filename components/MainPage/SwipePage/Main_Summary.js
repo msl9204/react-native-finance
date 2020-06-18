@@ -36,6 +36,8 @@ const MyListContents = styled.Text`
 export default function Main_Summary() {
     const auth = useAuth();
 
+    let favorite = auth.getFavorite();
+
     return (
         <MainSummaryContainer>
             <MajorIndex />

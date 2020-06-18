@@ -1,3 +1,5 @@
+// TODO : nickName 받아서 favorite 한 symbol 받아오기
+
 import React, { useState, useEffect, useContext, createContext } from "react";
 import { firebase_auth, firestore_db } from "../../db/firebase_auth";
 
@@ -81,10 +83,8 @@ function useProvideAuth() {
             .get()
             .then((snapshot) => {
                 if (snapshot.empty) {
-                    console.log("No matching documents.");
                     return;
                 }
-
                 snapshot.forEach((doc) => {
                     setNickName(doc.id);
                 });
@@ -94,11 +94,25 @@ function useProvideAuth() {
             });
     };
 
+    const getFavorite = (nickName) => {
+        const FavorRef = firestore_db.collection(
+            `/nicknames/${nickName}/favorited`
+        );
+
+        return FavorRef.get()
+            .then((snapshot) => {
+                snapshot.forEach((doc) => {
+                    console.log(doc.id);
+                });
+            })
+            .catch((err) => {
+                console.log("Error getting document", err);
+            });
+    };
+
     useEffect(() => {
         const unsubscribe = firebase_auth.onAuthStateChanged((user) => {
             if (user) {
-                console.log("=============================");
-                console.log(user);
                 setUser(user);
                 getNickname(user.email);
             } else {
@@ -119,5 +133,6 @@ function useProvideAuth() {
         sendPasswordResetEmail,
         confirmPasswordReset,
         checkAndAddNickname,
+        getFavorite,
     };
 }
