@@ -6,7 +6,6 @@ Following items are core frontend technologies used in this project:
 * React
 * React-Native
 * React-Navigation 
-* React-Navigation 
 * Styled-components
 
 
