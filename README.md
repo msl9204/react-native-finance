@@ -12,8 +12,6 @@ Following items are core frontend technologies used in this project:
 ### Server
 Following items are core frontend technologies used in this project:
 * Node.js
-* Sequelize
-* PostgreSql
 * FireBase Auth
 * FireBase FireStore
 * Cloud Storage
